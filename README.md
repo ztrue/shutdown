@@ -1,5 +1,7 @@
 # Golang App Shutdown Handling
 
+[![GoDoc](https://godoc.org/github.com/ztrue/shutdown?status.svg)](https://godoc.org/github.com/ztrue/shutdown)
+
 This package provides convenient interface for working with `os.Signal`.
 
 Multiple hooks can be applied, they will be called simultaneously on app shutdown.
