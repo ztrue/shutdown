@@ -56,7 +56,7 @@ Add shutdown hook:
 
 ```go
 shutdown.Add(func() {
-  log.Println("Stopping")
+	log.Println("Stopping")
 })
 ```
 
@@ -64,7 +64,7 @@ Remove hook:
 
 ```go
 key := shutdown.Add(func() {
-  log.Println("Stopping")
+	log.Println("Stopping")
 })
 
 shutdown.Remove(key)
@@ -74,7 +74,7 @@ With custom key:
 
 ```go
 shutdown.AddWithKey("mykey", func() {
-  log.Println("Stopping")
+	log.Println("Stopping")
 })
 
 shutdown.Remove("mykey")
@@ -84,7 +84,7 @@ With signal parameter:
 
 ```go
 shutdown.AddWithParam(func(os.Signal) {
-  log.Println("Stopping because of", os.Signal)
+	log.Println("Stopping because of", os.Signal)
 })
 ```
 
