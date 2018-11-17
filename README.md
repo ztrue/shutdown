@@ -87,3 +87,9 @@ shutdown.AddWithParam(func(os.Signal) {
   log.Println("Stopping because of", os.Signal)
 })
 ```
+
+Listen for specific signals:
+
+```go
+shutdown.Listen(syscall.SIGINT, syscall.SIGTERM)
+```
