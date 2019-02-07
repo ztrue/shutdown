@@ -1,6 +1,7 @@
 # Golang App Shutdown Handling
 
 [![GoDoc](https://godoc.org/github.com/ztrue/shutdown?status.svg)](https://godoc.org/github.com/ztrue/shutdown)
+[![GoRport](https://goreportcard.com/badge/github.com/ztrue/shutdown)](https://goreportcard.com/report/github.com/ztrue/shutdown)
 
 This package provides convenient interface for working with `os.Signal`.
 
