@@ -2,6 +2,7 @@
 
 [![GoDoc](https://godoc.org/github.com/ztrue/shutdown?status.svg)](https://godoc.org/github.com/ztrue/shutdown)
 [![Report](https://goreportcard.com/badge/github.com/ztrue/shutdown)](https://goreportcard.com/report/github.com/ztrue/shutdown)
+[![Build Status](https://travis-ci.com/ztrue/shutdown.svg?branch=master)](https://travis-ci.com/ztrue/shutdown)
 
 This package provides convenient interface for working with `os.Signal`.
 
