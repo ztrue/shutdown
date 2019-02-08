@@ -1,4 +1,4 @@
-// This package provides convenient interface for working with os.Signal.
+// Package shutdown provides convenient interface for working with os.Signal.
 //
 // Multiple hooks can be applied,
 // they will be called simultaneously on app shutdown.
@@ -11,10 +11,8 @@ import (
 	"sync"
 )
 
-var defaultShutdown = &Shutdown{
-	hooks: map[string]func(os.Signal){},
-	mutex: &sync.Mutex{},
-}
+// DefaultShutdown is a default instance.
+var DefaultShutdown = New()
 
 // Shutdown is an instance of shutdown handler.
 type Shutdown struct {
@@ -22,44 +20,57 @@ type Shutdown struct {
 	mutex *sync.Mutex
 }
 
+// New creates a new Shutdown instance.
+func New() *Shutdown {
+	return &Shutdown{
+		hooks: map[string]func(os.Signal){},
+		mutex: &sync.Mutex{},
+	}
+}
+
 // Add adds a shutdown hook
 // and returns hook identificator (key).
 func Add(fn func()) string {
-	return defaultShutdown.Add(fn)
+	return DefaultShutdown.Add(fn)
 }
 
 // AddWithKey adds a shutdown hook
 // with provided identificator (key).
 func AddWithKey(key string, fn func()) {
-	defaultShutdown.AddWithKey(key, fn)
+	DefaultShutdown.AddWithKey(key, fn)
 }
 
 // AddWithParam adds a shutdown hook with signal parameter
 // and returns hook identificator (key).
 func AddWithParam(fn func(os.Signal)) string {
-	return defaultShutdown.AddWithParam(fn)
+	return DefaultShutdown.AddWithParam(fn)
 }
 
 // AddWithKeyWithParam adds a shutdown hook with signal parameter
 // with provided identificator (key).
 func AddWithKeyWithParam(key string, fn func(os.Signal)) {
-	defaultShutdown.AddWithKeyWithParam(key, fn)
+	DefaultShutdown.AddWithKeyWithParam(key, fn)
 }
 
 // Hooks returns a copy of current hooks.
 func Hooks() map[string]func(os.Signal) {
-	return defaultShutdown.Hooks()
+	return DefaultShutdown.Hooks()
 }
 
 // Listen waits for provided OS signals.
 // It will wait for any signal if no signals provided.
 func Listen(signals ...os.Signal) {
-	defaultShutdown.Listen(signals...)
+	DefaultShutdown.Listen(signals...)
 }
 
 // Remove cancels hook by identificator (key).
 func Remove(key string) {
-	defaultShutdown.Remove(key)
+	DefaultShutdown.Remove(key)
+}
+
+// Reset cancels all hooks.
+func Reset() {
+	DefaultShutdown.Reset()
 }
 
 // Add adds a shutdown hook
@@ -127,6 +138,15 @@ func (s *Shutdown) Remove(key string) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	delete(s.hooks, key)
+}
+
+// Reset cancels all hooks.
+func (s *Shutdown) Reset() {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+	for key := range s.hooks {
+		delete(s.hooks, key)
+	}
 }
 
 // randomKey generates a random identificator (key) for hook.

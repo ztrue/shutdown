@@ -1,13 +1,13 @@
-# Golang App Shutdown Handling
+# Golang App Shutdown Hooks
 
 [![GoDoc](https://godoc.org/github.com/ztrue/shutdown?status.svg)](https://godoc.org/github.com/ztrue/shutdown)
-[![GoReport](https://goreportcard.com/badge/github.com/ztrue/shutdown)](https://goreportcard.com/report/github.com/ztrue/shutdown)
+[![Report](https://goreportcard.com/badge/github.com/ztrue/shutdown)](https://goreportcard.com/report/github.com/ztrue/shutdown)
 
 This package provides convenient interface for working with `os.Signal`.
 
 Multiple hooks can be applied, they will be called simultaneously on app shutdown.
 
-## Sample
+## Example
 
 ```go
 package main
@@ -49,13 +49,13 @@ Find more executable examples in [examples](examples) dir.
 
 ## How to Use
 
-Import:
+### Import
 
 ```go
 import "github.com/ztrue/shutdown"
 ```
 
-Add shutdown hook:
+### Add Shutdown Hook
 
 ```go
 shutdown.Add(func() {
@@ -63,7 +63,7 @@ shutdown.Add(func() {
 })
 ```
 
-Remove hook:
+### Remove Hook
 
 ```go
 key := shutdown.Add(func() {
@@ -73,7 +73,7 @@ key := shutdown.Add(func() {
 shutdown.Remove(key)
 ```
 
-With custom key:
+### Hook With Custom Key
 
 ```go
 shutdown.AddWithKey("mykey", func() {
@@ -83,7 +83,7 @@ shutdown.AddWithKey("mykey", func() {
 shutdown.Remove("mykey")
 ```
 
-With signal parameter:
+### Hook With Signal Parameter
 
 ```go
 shutdown.AddWithParam(func(os.Signal) {
@@ -91,7 +91,7 @@ shutdown.AddWithParam(func(os.Signal) {
 })
 ```
 
-Listen for specific signals:
+### Listen for Specific Signals
 
 ```go
 shutdown.Listen(syscall.SIGINT, syscall.SIGTERM)
