@@ -98,3 +98,19 @@ shutdown.AddWithParam(func(os.Signal) {
 ```go
 shutdown.Listen(syscall.SIGINT, syscall.SIGTERM)
 ```
+
+### Reload
+Reload service on `SIGHUP`
+```go
+	shutdown.AddWithParam(func(sig os.Signal) {
+		if sig == syscall.SIGHUP {
+			log.Println( "Reload conf...")
+			reloadConf()
+			// listen again signals to avoid shutdown
+			shutdown.Listen(syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
+		} else { // SIGINT, SIGTERM
+			log.Println("Stopping...")
+		}
+	})
+	shutdown.Listen(syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
+```
